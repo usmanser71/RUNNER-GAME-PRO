@@ -1,89 +1,94 @@
-let canvas = document.getElementById("gameCanvas");
-let ctx = canvas.getContext("2d");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = 800;
+canvas.height = 400;
 
-let player = { x: 50, y: 250, width: 30, height: 30, color: "red", dy: 0 };
-let gravity = 0.5;
-let jumpPower = -8;
+let player = { x: 50, y: 300, width: 50, height: 50, color: "yellow", dy: 0, gravity: 0.5, jumpPower: -10, onGround: true };
 let obstacles = [];
 let score = 0;
-let gameInterval;
+let gameOver = false;
 
-function startGame() {
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("shop").style.display = "none";
-    canvas.style.display = "block";
-    score = 0;
-    player.y = 250;
-    obstacles = [];
-    gameInterval = setInterval(updateGame, 20);
-    window.addEventListener("keydown", jump);
-}
-
-function openShop() {
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("shop").style.display = "block";
-}
-
-function backToMenu() {
-    document.getElementById("shop").style.display = "none";
-    document.getElementById("menu").style.display = "block";
-}
-
-function jump(e) {
-    if (e.code === "Space") {
-        player.dy = jumpPower;
-    }
-}
-
-function updateGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Gravity
-    player.dy += gravity;
-    player.y += player.dy;
-
-    if (player.y > canvas.height - player.height) {
-        player.y = canvas.height - player.height;
-        player.dy = 0;
-    }
-
-    // Draw player
+function drawPlayer() {
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.width, player.height);
+}
 
-    // Obstacles
-    if (Math.random() < 0.02) {
-        obstacles.push({ x: canvas.width, y: 270, width: 20, height: 50 });
+function drawObstacles() {
+    ctx.fillStyle = "red";
+    obstacles.forEach(obs => ctx.fillRect(obs.x, obs.y, obs.width, obs.height));
+}
+
+function updatePlayer() {
+    player.y += player.dy;
+    player.dy += player.gravity;
+
+    if (player.y + player.height >= canvas.height - 50) {
+        player.y = canvas.height - 50 - player.height;
+        player.dy = 0;
+        player.onGround = true;
     }
+}
 
-    for (let i = 0; i < obstacles.length; i++) {
-        let obs = obstacles[i];
-        obs.x -= 3;
-        ctx.fillStyle = "green";
-        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+function updateObstacles() {
+    obstacles.forEach(obs => obs.x -= 5);
+    obstacles = obstacles.filter(obs => obs.x + obs.width > 0);
+}
 
-        // Collision detection
+function spawnObstacle() {
+    let height = 50;
+    obstacles.push({ x: canvas.width, y: canvas.height - 50 - height, width: 30, height: height });
+}
+
+function detectCollision() {
+    obstacles.forEach(obs => {
         if (
             player.x < obs.x + obs.width &&
             player.x + player.width > obs.x &&
             player.y < obs.y + obs.height &&
             player.y + player.height > obs.y
         ) {
-            gameOver();
+            gameOver = true;
         }
+    });
+}
+
+function drawScore() {
+    document.getElementById("score").textContent = score;
+}
+
+function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawPlayer();
+    drawObstacles();
+    updatePlayer();
+    updateObstacles();
+    detectCollision();
+    drawScore();
+
+    if (!gameOver) {
+        score++;
+        requestAnimationFrame(gameLoop);
+    } else {
+        document.getElementById("restartBtn").style.display = "block";
     }
-
-    obstacles = obstacles.filter(obs => obs.x + obs.width > 0);
-
-    // Score
-    score++;
-    ctx.fillStyle = "white";
-    ctx.font = "16px Arial";
-    ctx.fillText("Score: " + score, 10, 20);
 }
 
-function gameOver() {
-    clearInterval(gameInterval);
-    alert("Game Over! Your score: " + score);
-    backToMenu();
-}
+document.addEventListener("keydown", (e) => {
+    if (e.code === "Space" && player.onGround) {
+        player.dy = player.jumpPower;
+        player.onGround = false;
+    }
+});
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+    obstacles = [];
+    score = 0;
+    player.y = 300;
+    gameOver = false;
+    document.getElementById("restartBtn").style.display = "none";
+    gameLoop();
+});
+
+setInterval(spawnObstacle, 1500);
+gameLoop();
