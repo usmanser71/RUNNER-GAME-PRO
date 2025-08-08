@@ -3,25 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Runner Game</title>
+    <title>Runner Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div id="menu">
-        <h1>⏳ Time Runner</h1>
-        <button onclick="startGame()">▶ Play Game</button>
-        <button onclick="openShop()">🛒 Shop</button>
-    </div>
-
-    <div id="shop" style="display:none;">
-        <h2>Shop</h2>
-        <p>جلد ہی مزید فیچرز آئیں گے!</p>
-        <button onclick="backToMenu()">🔙 Back</button>
-    </div>
-
-    <canvas id="gameCanvas" width="480" height="320" style="display:none;"></canvas>
-
+    <h1>🏃 رنر گیم</h1>
+    <canvas id="gameCanvas"></canvas>
+    <p>اسکور: <span id="score">0</span></p>
+    <button id="restartBtn" style="display:none;">دوبارہ کھیلیں</button>
+    
     <script src="game.js"></script>
 </body>
 </html>
