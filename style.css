@@ -1,30 +1,36 @@
-:root{
-  --bg1:#081226;
-  --panel: rgba(255,255,255,0.04);
-  --accent: linear-gradient(90deg,#7c3aed,#06b6d4);
-  color-scheme: dark;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #1e3c72, #2a5298);
+    color: white;
+    text-align: center;
 }
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;background:var(--bg1);color:#e6eef8}
-#wrapper{max-width:900px;margin:12px auto;padding:10px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-h1{font-size:1.2rem;margin:0}
-.hdr-right{display:flex;gap:8px;align-items:center}
-#coins,#best{background:var(--panel);padding:6px 10px;border-radius:8px;font-weight:700}
-#game-area{background:transparent;display:flex;flex-direction:column;align-items:center}
-#game-container{width:100%;max-width:860px;border-radius:12px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-#ui-mobile{display:flex;gap:12px;margin-top:8px}
-.control{padding:12px 18px;border-radius:10px;border:none;background:var(--panel);color:#e6eef8;font-weight:700}
-footer{display:flex;gap:10px;justify-content:center;margin-top:10px}
-button{cursor:pointer}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:20px}
-.hidden{display:none}
-.modal-content{background:#0b1220;padding:18px;border-radius:12px;max-width:720px;width:100%}
-#shop-list{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.shop-item{background:var(--panel);padding:8px;border-radius:8px;width:140px;text-align:center}
-.shop-item button{margin-top:8px;padding:6px 10px;border-radius:6px;border:none;background:#06b6d4;color:#022}
-@media(max-width:520px){
-  h1{font-size:1rem}
-  .control{flex:1}
-  #game-container{max-width:420px}
+
+h1, h2 {
+    margin-top: 40px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: gold;
+    color: black;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: orange;
+}
+
+canvas {
+    background: #333;
+    display: block;
+    margin: 20px auto;
+    border: 2px solid white;
 }
