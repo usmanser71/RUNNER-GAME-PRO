@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ur">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Time Runner — Pro (Demo)</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Phaser CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+    <header>
+      <h1>Time Runner 2077 — Pro</h1>
+      <div class="hdr-right">
+        <div id="coins">Coins: 0</div>
+        <div id="best">Best: 0</div>
+      </div>
+    </header>
+
+    <main id="game-area">
+      <div id="game-container"></div>
+      <div id="ui-mobile">
+        <button id="btn-jump" class="control">Jump</button>
+        <button id="btn-slide" class="control">Slide</button>
+      </div>
+    </main>
+
+    <footer>
+      <button id="btn-shop">Shop</button>
+      <button id="btn-share">Share</button>
+      <button id="btn-pause">Pause</button>
+    </footer>
+  </div>
+
+  <!-- Simple modal/shop -->
+  <div id="modal" class="hidden">
+    <div class="modal-content">
+      <h2>Shop — Skins</h2>
+      <div id="shop-list"></div>
+      <button id="close-shop">Close</button>
+    </div>
+  </div>
+</body>
+</html>
